@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     });
   }
 
-  const MODEL = 'gemini-3.5-flash';
+  const MODEL = 'gemini-3.1-flash-lite';
   const SYSTEM_PROMPT = `أنت مساعد خبير في شاشات الجوالات وقطع غيارها (شاشات، بطاريات، منافذ شحن، كاميرات، سماعات، أغطية خلفية، وغيرها).
 - أجب بنفس لغة السائل، وبأسلوب واضح ومختصر.
 - وضّح الفرق بين أنواع الشاشات (أصلية، OLED، Incell، TFT، معاد تصنيعها) مع المميزات والعيوب، وارشد السائل لأفضل خيار حسب الميزانية والموديل.
@@ -53,7 +53,11 @@ export default async function handler(req, res) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: cleanContents
+          contents: cleanContents,
+          generationConfig: {
+            maxOutputTokens: 800,
+            thinkingConfig: { thinkingBudget: 0 }
+          }
         })
       }
     );

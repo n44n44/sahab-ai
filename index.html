@@ -373,7 +373,7 @@
     /* ===== الإعدادات ===== */
     // مفتاح Gemini API (مفعّل ومضبوط ليعمل تلقائياً محلياً وعبر الإنترنت):
     const GEMINI_API_KEY = atob("QVEuQWI4Uk42SXMtOFREMjFNY1B6cXJZWW1nc3ZxRjdONDRFVGJJeU5xVklHSjNJdzN0dUE=");
-    const GEMINI_MODEL = "gemini-3.5-flash";
+    const GEMINI_MODEL = "gemini-3.1-flash-lite";
 
     // رابط الـ Cloudflare Worker (اختياري - اتركه فارغاً إذا كنت تستخدم المفتاح المباشر):
     const WORKER_URL = "";
@@ -462,7 +462,7 @@
 
     async function askGemini(contents) {
       // 1. إذا كان الموقع منشوراً على Vercel أو خادم يدعم /api/chat، نستخدمه لحماية المفتاح
-      if (window.location.protocol.startsWith("http")) {
+      if (window.location.protocol.startsWith("http") && !["localhost", "127.0.0.1"].includes(window.location.hostname)) {
         try {
           const apiRes = await fetch("/api/chat", {
             method: "POST",
@@ -507,6 +507,10 @@
           body: JSON.stringify({
             systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
             contents: cleanContents,
+            generationConfig: {
+              maxOutputTokens: 800,
+              thinkingConfig: { thinkingBudget: 0 }
+            }
           }),
         });
 
