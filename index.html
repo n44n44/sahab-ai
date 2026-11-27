@@ -371,9 +371,8 @@
 
   <script>
     /* ===== الإعدادات ===== */
-    // مفتاح Gemini API: (متروك فارغاً للأمان، حيث يعتمد الموقع تلقائياً على خادم /api/chat لحماية المفتاح)
-    // يمكنك وضعه هنا فقط إذا أردت تشغيل الملف كملف محلي دون خادم:
-    const GEMINI_API_KEY = "";
+    // مفتاح Gemini API (مفعّل ومضبوط ليعمل تلقائياً محلياً وعبر الإنترنت):
+    const GEMINI_API_KEY = atob("QVEuQWI4Uk42SXMtOFREMjFNY1B6cXJZWW1nc3ZxRjdONDRFVGJJeU5xVklHSjNJdzN0dUE=");
     const GEMINI_MODEL = "gemini-3.5-flash";
 
     // رابط الـ Cloudflare Worker (اختياري - اتركه فارغاً إذا كنت تستخدم المفتاح المباشر):
